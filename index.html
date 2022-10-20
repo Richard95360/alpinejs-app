@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <script defer src="app.js"></script>
+    <script defer src="https://unpkg.com/alpinejs"></script>
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+<body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        Accueil
+    </nav>
+    <div class="container-m-5" x-data="{ open: false }">
+        <div x-data="{ username: 'Richard' }">
+            Username: <strong x-text="username"></strong>
+        </div>
+
+        <h1>Mon tuto</h1>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Id eos delectus quas quasi fugiat sequi accusantium. Assumenda porro voluptate enim odit in, neque ducimus numquam nisi doloremque unde error repellat.
+        Amet nulla suscipit quia earum rerum fugit fuga eveniet, mollitia praesentium. Odit qui, quam eius quisquam expedita suscipit at mollitia saepe vitae odio ipsam corporis hic rerum, vel quas alias.
+        Illo, consectetur ipsum! Nesciunt nobis sed quos iusto. Beatae odit minima illum rerum quis ab excepturi ipsum sunt, corporis quaerat esse. Quis neque, quo ab modi voluptas maiores? Soluta, incidunt?
+        Totam adipisci amet fugit est reiciendis doloremque fuga molestias quaerat distinctio. Reprehenderit quasi aliquam quas ad. Nemo, veritatis quasi modi delectus quod quia vitae explicabo, esse aliquid a ut! Doloribus?
+        Fugiat quia expedita ratione saepe? Laudantium ipsum dolore tempora velit provident dicta culpa doloremque minima ut facere autem asperiores perferendis quasi, exercitationem sint iure animi, magni sequi? Aut, dignissimos accusamus.
+    </p>
+    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illum, necessitatibus?</p>
+    <p x-show="!open">
+    </p>
+    <template x-if="!open">
+        <button @click="open = true">afficher</button>
+
+    </template>
+    <template x-if="open">
+        <p>Lorem ipsum dolor sit amet.</p>
+    </template>
+    </div>
+    <div x-data="{message: ''}">
+        <input type="text" x-model="message">
+        <button v-on:click="message = 'changed'">Change message</button>
+        <span x-text="message"></span>
+    </div>
+    <div class="container my-5" x-data="tabs('tab1')">
+            <p x-text="tab"></p>
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a href="#tab1" class="nav-link"
+                 @click="toggleTab"
+                 x-active-page=" isActive('tab1')"
+                 >Onglet 1</a>
+            </li>
+            <li class="nav-item">
+                <a href="#tab2" class="nav-link"
+                @click="toggleTab"
+                x-active-page=" isActive('tab2')"
+                >Onglet 2</a>
+            </li>
+        </ul>
+        <div class="my-2">
+            <template x-if="isActive('tab1')">
+               <div>
+                <h2>Onglet 1</h2>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Alias, minima.</p>
+                <p>
+                    <a href="#tab2" @click="toggleTab">Aller à l'onglet 2</a>
+                </p>
+               </div>
+            </template>
+            <template x-if="isActive('tab2')">
+              <div>
+                <h2>Onglet 2</h2>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Alias, minima.</p>
+                <p>
+                    <a href="#tab1" @click="toggleTab">Aller à l'onglet 1</a>
+                </p>
+                <div x-data="posts()">
+                  <p x-show="!$store.posts.loaded">
+                      <button
+                       class="btn btn-primary"
+                       @click="$store.posts.loadPosts()"
+                      >Charger les articles</button>
+                  </p>
+                  <div x-show="$store.posts.loading"class="spinner-border">
+                    
+                  </div>
+                  <template x-for="post in $store.posts.posts" :key="post.id">
+                        <article class="card p-2">
+                            <h3 x-text="post.title"></h3>
+                            <p x-text="post.body"></p>
+                        </article>
+                  </template>
+                </div>
+                <div>
+                    <button  @click="$el.innerHTML = 'Supprimer!!!'" class="btn btn-danger">suppr</button>
+                </div>
+              </div>
+            </template>
+        </div>
+    </div>
+
+
+</body>
+</html>
